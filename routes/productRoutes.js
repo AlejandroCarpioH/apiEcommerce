@@ -6,6 +6,11 @@ import { getProducts, getProductsForId, deleteProduct, insertProducts } from '..
 
 const router = express.Router()
 
+
+router.get('/api/v1/test', (req, res) => {
+    res.send("mensaje de prueba")
+})
+
 router.get('/api/v1/products', getProducts)
 
 router.get('/api/v1/products/:id', getProductsForId)
