@@ -34,7 +34,8 @@ export default function productService() {
     const insertProducts = async ({ products }) => {
 
         let insetNumber = 0
-        let json = []
+        let productReject = []
+        let productEntered = []
         const client = await mongodb()
         const db = client.db("ecommerce")
         const collections = db.collection("products")
@@ -42,16 +43,24 @@ export default function productService() {
             const response = await collections.find({ nameProduct: product.nameProduct }).toArray()
             if (response.length === 0) {
                 collections.insertOne(product)
+                productEntered.push(product)
                 insetNumber++
             } else {
-                json.push(product)
+                productReject.push(product)
             }
         })
         await Promise.all(promises)
+
+        const nameReject = productReject.map(value => { return value.nameProduct })
+        const nameEntered = productEntered.map(value => { return value.nameProduct })
         return (
+
+
+
             {
-                message: `${insetNumber} ingresados y ${json.length} rechazados`,
-                reject: json
+                message: `${insetNumber} ingresados y ${productReject.length} rechazados`,
+                entered: nameEntered,
+                reject: nameReject
             }
         )
     }

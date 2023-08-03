@@ -1,7 +1,7 @@
 import mongodb from "../service/mongodb.js"
 
 export default function hasOwnProperties(req, res, next) {
-
+    /* valores minimos que debe tener el json recivido */
     // nameProduct
     // price
     // stock
@@ -9,21 +9,28 @@ export default function hasOwnProperties(req, res, next) {
     const properties = ["nameProduct", "price", "stock", "imgUrl"]
     const data = req.body
 
-
     const result = data.every(product => properties.every(property => product.hasOwnProperty(property)))
+    const productType = data.every(value => {
+        return (
+            typeof value.nameProduct === 'string' &&
+            typeof value.price === 'number' &&
+            typeof value.stock === 'number' &&
+            typeof value.imgUrl === 'string'
+        )
+    })
 
-    // console.log("asdsd")
-    // data.map(product => {
-    //     values.map(value => {
-
-    //     })
-
-    //     // if (!v.hasOwnProperty("nameProduct") || !v.hasOwnProperty("stocl") || !v.hasOwnProperty("price") || !v.hasOwnProperty("imgUrl")) {
-    //     //     value = false
-    //     // }
-    //     // value = v.hasOwnProperty("nameProduct")
-    // })
-    result ? next() : res.send("las propiedades del json no coinciden")
+    result && productType ? next() : res.json([
+        {
+            message: "formato incorrecto y o tipos incorrectos",
+            formato:
+            {
+                nameProduct: "String",
+                price: "number",
+                stock: "number",
+                imgUrl: "string"
+            }
+        }
+    ])
 
     const checkIfProductExists = () => {
         mongodb()
