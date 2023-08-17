@@ -35,6 +35,7 @@ const deleteProduct = async (req, res) => {
 const insertProducts = async (req, res) => {
 
     try {
+        // console.log(req.body)
         const products = req.body
         const response = await productService().insertProducts({ products })
         res.json(response)
@@ -43,4 +44,28 @@ const insertProducts = async (req, res) => {
     }
 }
 
-export { getProducts, getProductsForId, deleteProduct, insertProducts }
+const updateProduct = async (req, res) => {
+    // res.send(req.body)
+
+    try {
+        const id = req.params.id
+        const values = req.body
+        const result = await productService().updateProduct({ id, values })
+        res.json({ response: result })
+    } catch (error) {
+        console.log(error)
+        res.send("id incorrecto")
+    }
+}
+// borrar en produccion
+const deleteAllProducts = async (req, res) => {
+    try {
+
+        const result = await productService().deleteAllProducts()
+        res.json({ messaje: `se han borrado ${result} datos` })
+    } catch (error) {
+        res.send("error al borrar")
+    }
+}
+
+export { getProducts, getProductsForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts }
