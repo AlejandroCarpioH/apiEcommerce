@@ -47,10 +47,10 @@ export default function productService() {
         let productReject = []
         let productEntered = []
         const promises = await products.map(async product => {
-            const response = await collections.find({ nameProduct: product.nameProduct }).toArray()
+            const response = await collections.find({ productName: product.productName }).toArray()
             if (response.length === 0) {
                 collections.insertOne(product)
-                const { _id } = await collections.find({ nameProduct: product.nameProduct }).toArray()
+                const { _id } = await collections.find({ productName: product.productName }).toArray()
 
                 productEntered.push({ ...product, id: _id })
                 insetNumber++
@@ -59,8 +59,8 @@ export default function productService() {
             }
         })
         await Promise.all(promises)
-        const nameReject = productReject.map(value => { return value.nameProduct })
-        const productsEntered = productEntered.map(value => { return { name: value.nameProduct, id: value._id } })
+        const nameReject = productReject.map(value => { return value.productName })
+        const productsEntered = productEntered.map(value => { return { name: value.productName, id: value._id } })
         return (
             {
                 message: { entered: insetNumber, reject: productReject.length },
@@ -72,16 +72,19 @@ export default function productService() {
 
     const updateProduct = async ({ id, values }) => {
         const { client, db, collections } = await getConnection()
+
         const filter = { _id: new ObjectId(id) }
         const update = { $set: values }
         const result = await collections.updateOne(filter, update)
+        client.close()
         return result
     }
 
     // borrar en produccion
     const deleteAllProducts = async () => {
-        const { collections } = await getConnection()
+        const { client, collections } = await getConnection()
         const result = await collections.deleteMany({})
+        client.close()
         return result.deletedCount
     }
 

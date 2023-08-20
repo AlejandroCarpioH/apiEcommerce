@@ -40,7 +40,7 @@ const insertProducts = async (req, res) => {
         const response = await productService().insertProducts({ products })
         res.json(response)
     } catch (Error) {
-        res.send(`error`)
+        res.send(`error ${Error}`)
     }
 }
 
