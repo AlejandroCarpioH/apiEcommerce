@@ -1,7 +1,6 @@
 import { getUser } from '../controller/productController.js'
-import mongodb from '../service/mongodb.js'
 import jwt from 'jsonwebtoken'
-export default async function generateToken(req, res, next) {
+export default function generateToken(req, res, next) {
 
 
     const { username, password } = req.body
@@ -12,50 +11,41 @@ export default async function generateToken(req, res, next) {
         return
     }
 
-    const result = await getUser({ username, password })
+    try {
+        getUser({ username, password }).then(result => {
+            if (!result) {
+                res.send("usuario no valido")
+                return
+            }
+            const secret = process.env.SECRET_KEY
+            const date = new Date()
+            date.setHours(date.getHours() + 12)
 
-    // const client = await mongodb()
+            const opcionesDeFormato = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            };
+            const formatDate = date.toLocaleDateString("es-ES", opcionesDeFormato)
+            const token = jwt.sign({ formatDate }, secret, { expiresIn: "12h" })
 
-    // const db = client.db("users")
-    // const collection = db.collection("user")
-    // const response = await collection.findOne({ username: username })
+            res.json(
+                {
+                    token: token,
+                    expired: formatDate
+                }
+            )
+        })
 
-    // if (!response) {
-    //     res.send("usuario no valido")
-    //     return
-    // }
-    // const { password: pass } = response
-    // if (password != pass) {
-    //     res.send("usuario no valido")
-    //     return
-    // }
 
-    if (!result) {
-        res.send("usuario no valido")
-        return
+
+    } catch (error) {
+        res.send(`error en la consulta ${error}`)
     }
 
-    const secret = process.env.SECRET_KEY
-    const date = new Date()
-    date.setHours(date.getHours() + 12)
-
-    const opcionesDeFormato = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        timeZoneName: 'short'
-    };
-    const formatDate = date.toLocaleDateString("es-ES", opcionesDeFormato)
-    const token = jwt.sign({ formatDate }, secret, { expiresIn: "12h" })
-
-    res.json(
-        {
-            token: token,
-            expired: formatDate
-        }
-    )
 
 }
