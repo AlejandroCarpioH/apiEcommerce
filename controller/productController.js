@@ -68,12 +68,12 @@ const deleteAllProducts = async (req, res) => {
     }
 }
 
-const insertJwt = async () => {
-    try {
 
-    } catch (error) {
 
-    }
+const getUser = async ({ username, password }) => {
+    const response = await productService().getUser({ username, password })
+    console.log(`el valor es ${response}`)
+    return response
 }
 
-export { getProducts, getProductsForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts, insertJwt }
+export { getProducts, getProductsForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts, getUser }

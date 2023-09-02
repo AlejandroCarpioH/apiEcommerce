@@ -28,7 +28,7 @@ export default function productService() {
     }
     const getProductForId = async ({ id }) => {
         const { client, collections } = await getConnection()
-        const [response, ...rest] = await collections.find({ _id: new ObjectId(id) }).toArray()
+        const response = await collections.findOne({ _id: new ObjectId(id) })
         client.close()
         return response
     }
@@ -88,11 +88,20 @@ export default function productService() {
         return result.deletedCount
     }
 
-    const insertJwt = async () => {
-        const client = await mongodb()
-        const db = client.db("ecommerce")
-        const collections = db.collection("jsonwebtoken")
-
+    const getUser = async ({ username: user, password: pass }) => {
+        const { db } = await getConnection()
+        const collections = db.collection("user")
+        const result = await collections.findOne({ username: user, password: pass })
+        const { password } = result
+        console.log(result === null)
+        if (result === null) {
+            return false
+        }
+        if (password != pass) {
+            // res.send("usuario no valido")
+            return false
+        }
+        return true
     }
 
     return {
@@ -102,7 +111,7 @@ export default function productService() {
         insertProducts,
         updateProduct,
         deleteAllProducts,
-        insertJwt
+        getUser
     }
 }
 

@@ -1,3 +1,4 @@
+import { getUser } from '../controller/productController.js'
 import mongodb from '../service/mongodb.js'
 import jwt from 'jsonwebtoken'
 export default async function generateToken(req, res, next) {
@@ -10,18 +11,26 @@ export default async function generateToken(req, res, next) {
         res.json({ message: "se necesita usuario y contraseña", format: { username: "string", password: "string" } })
         return
     }
-    const client = await mongodb()
 
-    const db = client.db("users")
-    const collection = db.collection("user")
-    const response = await collection.findOne({ username: username })
+    const result = await getUser({ username, password })
 
-    if (!response) {
-        res.send("usuario no valido")
-        return
-    }
-    const { password: pass } = response
-    if (password != pass) {
+    // const client = await mongodb()
+
+    // const db = client.db("users")
+    // const collection = db.collection("user")
+    // const response = await collection.findOne({ username: username })
+
+    // if (!response) {
+    //     res.send("usuario no valido")
+    //     return
+    // }
+    // const { password: pass } = response
+    // if (password != pass) {
+    //     res.send("usuario no valido")
+    //     return
+    // }
+
+    if (!result) {
         res.send("usuario no valido")
         return
     }
