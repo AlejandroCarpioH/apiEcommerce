@@ -9,7 +9,7 @@ import generateToken from "./middleware/generateToken.js";
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT || 8 / 0
+const port = process.env.PORT || 80
 
 app.use(cors())
 app.use(express.json())

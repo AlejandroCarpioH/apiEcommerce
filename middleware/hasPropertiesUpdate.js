@@ -2,7 +2,7 @@ import schemaProduct from "./schemaProduct.js"
 import { validate } from "jsonschema"
 
 export function hasPropertiesUpdate(req, res, next) {
-    // console.log(req.body)
+    console.log(req.body)
     try {
         // console.log('entro')
         // const data = req.body
@@ -24,7 +24,7 @@ export function hasPropertiesUpdate(req, res, next) {
         // const properties = result.every(v => v)
 
         const schema = schemaProduct(false)
-
+        console.log(schema)
         const body = req.body
 
         // const result = body.every(data => validate(data, schema).valid)

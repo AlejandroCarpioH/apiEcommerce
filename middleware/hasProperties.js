@@ -49,12 +49,12 @@ export default function hasOwnProperties(req, res, next) {
                     productName: "string",
                     price: "number",
                     stock: "number",
-                    imgUrl: { clave: "valor" }
+                    imgUrl: { "small": "string", "medium": "string", "large": "string" }
                 }
             }
         )
     } catch (error) {
-        res.json(...error)
+        res.json(error)
     }
 
 }

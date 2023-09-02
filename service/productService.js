@@ -74,7 +74,14 @@ export default function productService() {
         const { client, db, collections } = await getConnection()
 
         const filter = { _id: new ObjectId(id) }
-        const update = { $set: values }
+        let update = { $set: values }
+        if (values.imgUrl === undefined) {
+            update = { $set: values }
+        } else {
+            const { imgUrl } = await collections.findOne(filter)
+            update = { $set: { imgUrl: { ...imgUrl, ...values.imgUrl } } }
+        }
+
         const result = await collections.updateOne(filter, update)
         client.close()
         return result

@@ -1,4 +1,13 @@
 export default function schemaProduct(required = true) {
+
+    let properties = {
+        "properties": {
+            "small": { "type": "string" },
+            "medium": { "type": "string" },
+            "large": { "type": "string" }
+        }
+    }
+    properties = required ? { ...properties, "required": ["small", "medium", "large"] } : properties
     const schema = {
         "type": "object",
         "properties": {
@@ -7,14 +16,11 @@ export default function schemaProduct(required = true) {
             "price": { "type": "number", "minimum": 0 },
             "imgUrl": {
                 "type": "object",
-                "properties": {
-                    "small": { "type": "string" },
-                    "medium": { "type": "string" },
-                    "large": { "type": "string" }
-                }
+                properties
             }
         }
     }
+    // console.log(properties)
     return required ? {
         ...schema, "required": ["productName", "stock", "price", "imgUrl"]
     } : schema
