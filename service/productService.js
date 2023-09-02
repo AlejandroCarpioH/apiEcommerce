@@ -92,11 +92,11 @@ export default function productService() {
         const { db } = await getConnection()
         const collections = db.collection("user")
         const result = await collections.findOne({ username: user, password: pass })
-        const { password } = result
         console.log(result === null)
         if (result === null) {
             return false
         }
+        const { password } = result
         if (password != pass) {
             // res.send("usuario no valido")
             return false

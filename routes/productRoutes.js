@@ -2,7 +2,7 @@ import express from 'express'
 import hasOwnProperties from '../middleware/hasProperties.js'
 import { hasPropertiesUpdate } from '../middleware/hasPropertiesUpdate.js'
 import hasToken from '../middleware/hasToken.js'
-import generateToken from '../middleware/generateToken.js'
+
 import {
     getProducts,
     getProductsForId,
@@ -18,7 +18,7 @@ router.get('/api/v1/test', hasToken, (req, res) => {
     res.send("autorizado")
 })
 
-router.get('/api/v1/generateToken', generateToken)
+
 
 router.get('/api/v1/products', getProducts)
 

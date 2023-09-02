@@ -12,7 +12,9 @@ export default function generateToken(req, res, next) {
     }
 
     try {
-        getUser({ username, password }).then(result => {
+
+        (async () => {
+            const result = await getUser({ username, password })
             if (!result) {
                 res.send("usuario no valido")
                 return
@@ -39,9 +41,8 @@ export default function generateToken(req, res, next) {
                     expired: formatDate
                 }
             )
-        })
 
-
+        })()
 
     } catch (error) {
         res.send(`error en la consulta ${error}`)
