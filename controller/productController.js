@@ -68,4 +68,12 @@ const deleteAllProducts = async (req, res) => {
     }
 }
 
-export { getProducts, getProductsForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts }
+const insertJwt = async () => {
+    try {
+
+    } catch (error) {
+
+    }
+}
+
+export { getProducts, getProductsForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts, insertJwt }

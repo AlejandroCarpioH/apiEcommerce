@@ -30,7 +30,6 @@ export function hasPropertiesUpdate(req, res, next) {
         // const result = body.every(data => validate(data, schema).valid)
         const result = validate(body, schema)
 
-        console.log(result.valid)
         result.valid ? next() : res.json({ message: "no cumple con el formato", format: schema })
     } catch (error) {
         res.send(error)

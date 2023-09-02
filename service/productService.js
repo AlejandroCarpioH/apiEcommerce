@@ -28,7 +28,7 @@ export default function productService() {
     }
     const getProductForId = async ({ id }) => {
         const { client, collections } = await getConnection()
-        const response = await collections.find({ _id: new ObjectId(id) }).toArray()
+        const [response, ...rest] = await collections.find({ _id: new ObjectId(id) }).toArray()
         client.close()
         return response
     }
@@ -88,7 +88,22 @@ export default function productService() {
         return result.deletedCount
     }
 
-    return { getAllProducts, getProductForId, deleteProduct, insertProducts, updateProduct, deleteAllProducts }
+    const insertJwt = async () => {
+        const client = await mongodb()
+        const db = client.db("ecommerce")
+        const collections = db.collection("jsonwebtoken")
+
+    }
+
+    return {
+        getAllProducts,
+        getProductForId,
+        deleteProduct,
+        insertProducts,
+        updateProduct,
+        deleteAllProducts,
+        insertJwt
+    }
 }
 
 
