@@ -30,7 +30,7 @@ export default function generateToken(req, res, next) {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZoneName: 'short'
+                timeZone: 'America/Santiago'
             };
             const formatDate = date.toLocaleDateString("es-ES", opcionesDeFormato)
             const token = jwt.sign({ formatDate }, secret, { expiresIn: "12h" })

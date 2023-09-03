@@ -29,7 +29,7 @@ export default function hasToken(req, res, next) {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZoneName: 'short'
+                timeZone: 'America/Santiago'
             };
 
             const date = new Date(expiredAt)
