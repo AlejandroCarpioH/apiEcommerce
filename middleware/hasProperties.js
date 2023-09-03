@@ -29,9 +29,7 @@ export default function hasOwnProperties(req, res, next) {
     // })
     try {
 
-        const schema = schemaProduct()
-        // console.log(typeof req.body)
-
+        const schema = schemaProduct(true)
 
         if (!req.body[0]) {
             res.send('enviar un array de objetos')

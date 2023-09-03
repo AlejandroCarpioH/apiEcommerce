@@ -8,6 +8,7 @@ export default function schemaProduct(required = true) {
         }
     }
     properties = required ? { ...properties, "required": ["small", "medium", "large"] } : properties
+    console.log(properties)
     const schema = {
         "type": "object",
         "properties": {
@@ -16,7 +17,7 @@ export default function schemaProduct(required = true) {
             "price": { "type": "number", "minimum": 0 },
             "imgUrl": {
                 "type": "object",
-                properties
+                ...properties
             }
         }
     }
