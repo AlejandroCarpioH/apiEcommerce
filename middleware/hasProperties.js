@@ -47,6 +47,7 @@ export default function hasOwnProperties(req, res, next) {
                     productName: "string",
                     price: "number",
                     stock: "number",
+                    description: "string",
                     imgUrl: { "small": "string", "medium": "string", "large": "string" }
                 }
             }
