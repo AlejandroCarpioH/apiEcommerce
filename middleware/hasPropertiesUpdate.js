@@ -23,12 +23,16 @@ export function hasPropertiesUpdate(req, res, next) {
         // }
         // const properties = result.every(v => v)
 
-        const schema = schemaProduct(false)
-        console.log(schema)
+        let schema = schemaProduct(false)
+        schema = { ...schema, additionalProperties: false }
+        // console.log(schema)
         const body = req.body
 
         // const result = body.every(data => validate(data, schema).valid)
-        const result = validate(body, schema)
+        const result = validate(body, schema, { allowUnknownAttributes: false })
+
+        // console.log(result.valid)
+        // return
 
         result.valid ? next() : res.json({ message: "no cumple con el formato", format: schema })
     } catch (error) {
