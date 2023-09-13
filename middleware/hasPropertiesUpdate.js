@@ -1,4 +1,4 @@
-import schemaProduct from "./schemaProduct.js"
+import schemaProduct from "../models/schemaProduct.js"
 import { validate } from "jsonschema"
 
 export function hasPropertiesUpdate(req, res, next) {

@@ -1,5 +1,4 @@
-import mongodb from "../service/mongodb.js"
-import schemaProduct from "./schemaProduct.js"
+import schemaProduct from "../models/schemaProduct.js"
 import { validate } from "jsonschema"
 
 export default function hasOwnProperties(req, res, next) {
@@ -29,7 +28,8 @@ export default function hasOwnProperties(req, res, next) {
     // })
     try {
 
-        const schema = schemaProduct(true)
+        let schema = schemaProduct(true)
+        schema = { ...schema, additionalProperties: false }
 
         if (!req.body[0]) {
             res.send('enviar un array de objetos')
@@ -37,7 +37,9 @@ export default function hasOwnProperties(req, res, next) {
         }
 
         const { body } = req
-        const result = body.every(data => validate(data, schema).valid)
+        const result = body.every(data => validate(data, schema, { allowUnknownAttributes: false }).valid)
+
+        // const result = validate(body, schema, { allowUnknownAttributes: false })
 
         result ? next() : res.json(
             {
@@ -48,6 +50,7 @@ export default function hasOwnProperties(req, res, next) {
                     price: "number",
                     stock: "number",
                     description: "string",
+                    category: "string",
                     imgUrl: { "small": "string", "medium": "string", "large": "string" }
                 }
             }

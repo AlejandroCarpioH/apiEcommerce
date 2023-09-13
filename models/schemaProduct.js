@@ -15,6 +15,7 @@ export default function schemaProduct(required = true) {
             "productName": { "type": "string" },
             "stock": { "type": "integer", "minimum": 0 },
             "price": { "type": "number", "minimum": 0 },
+            "category": { "type": "string" },
             "description": { "type": "string" },
             "imgUrl": {
                 "type": "object",
@@ -24,7 +25,7 @@ export default function schemaProduct(required = true) {
     }
     // console.log(properties)
     return required ? {
-        ...schema, "required": ["productName", "stock", "price", "description", "imgUrl"]
+        ...schema, "required": ["productName", "stock", "price", "category", "description", "imgUrl"]
     } : schema
 
 }
