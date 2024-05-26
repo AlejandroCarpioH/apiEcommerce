@@ -1,0 +1,30 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM7pDM6GR+HQaonH/Qa9xgAQglEOqkG6lQfXPjqAsXaG david242455@gmail.com }}
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no user@3.129.25.3 << 'EOF'
+            cd /home/ubuntu
+            git pull origin main
+            # Aquí puedes ejecutar cualquier comando necesario para desplegar tu aplicación
+            # Ejemplo para un proyecto Node.js
+            npm install
+            pm2 restart all
+          EOF
