@@ -15,7 +15,7 @@ import {
 const router = express.Router()
 
 router.get('/api/v1/test', hasToken, (req, res) => {
-    res.send("autorizado nuevo 4")
+    res.send("this is a test for testing github actions :)")
 })
 
 
