@@ -59,4 +59,6 @@ export default function hasOwnProperties(req, res, next) {
         res.json(error)
     }
 
+
+
 }

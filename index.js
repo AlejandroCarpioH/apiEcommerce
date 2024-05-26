@@ -19,5 +19,5 @@ app.use('/api/v1/generateToken', generateToken)
 app.use('/', hasToken, router)
 
 app.listen(port, () => {
-    console.log("server iniciado")
+    console.log(`server iniciado, escuchando en el puerto ${port}`)
 })
