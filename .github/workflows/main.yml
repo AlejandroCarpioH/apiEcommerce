@@ -25,6 +25,6 @@ jobs:
             git pull origin main
             # Aquí puedes ejecutar cualquier comando necesario para desplegar tu aplicación
             # Ejemplo para un proyecto Node.js
-            sudo npm install
-            sudo pm2 restart all
+            npm install
+            pm2 restart all
           EOF
